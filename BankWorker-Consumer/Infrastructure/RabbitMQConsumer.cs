@@ -68,11 +68,11 @@ public class RabbitMQConsumer : IRabbitMQConsumer
             Console.WriteLine($"  @@@ {queueName}'den alınan mesaj : {msg}");
 
             // Simüle ettiğimiz için delay koydum
-            await Task.Delay(500);
-            //
-            // // Fairy Dispatch'i denemek için rnd degerlrden olusan delay olsuturalım 
-            //
-            // await Task.Delay(Random.Shared.Next(1, 15000));
+            // await Task.Delay(500);
+            
+            // Fairy Dispatch'i denemek için rnd degerlrden olusan delay olsuturalım 
+            
+            await Task.Delay(Random.Shared.Next(1, 15000));
             await channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false);
         };
 
