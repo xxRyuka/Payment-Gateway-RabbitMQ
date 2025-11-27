@@ -12,3 +12,4 @@
 /home/ryuka/RiderProjects/Bank Payment Gateway /Shared/obj/Debug/net9.0/Shared.pdb
 /home/ryuka/RiderProjects/Bank Payment Gateway /Shared/obj/Debug/net9.0/Shared.genruntimeconfig.cache
 /home/ryuka/RiderProjects/Bank Payment Gateway /Shared/obj/Debug/net9.0/ref/Shared.dll
+/home/ryuka/RiderProjects/Bank Payment Gateway /Shared/obj/Debug/net9.0/Shared.sourcelink.json

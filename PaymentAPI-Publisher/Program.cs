@@ -10,11 +10,16 @@ IRabbitMQPublisher publisher = new RabbitMQPublisher();
 await publisher.ConnectAsync();
 
 
-PaymentRequest paymentRequest = new()
+for (int i = 0; i < 1000; i++)
 {
-    Amount = 15,
-    CardNumber = "15",
-    CreatedAt = DateTime.Now,
-    OrderId = 2
-};
-await publisher.Publish(paymentRequest);
+    PaymentRequest paymentRequest = new()
+    {
+        Amount = 15+ Random.Shared.Next(i, 10000),
+        CardNumber = "15" + $" {i}",
+        CreatedAt = DateTime.Now,
+        OrderId = i+1
+    };
+
+
+    await publisher.Publish(paymentRequest);
+}

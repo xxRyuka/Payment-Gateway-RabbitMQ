@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "Wn58s0xcihQ=",
+  "dgSpecHash": "AUQU4AQ7pzc=",
   "success": true,
   "projectFilePath": "/home/ryuka/RiderProjects/Bank Payment Gateway /BankWorker-Consumer/BankWorker-Consumer.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/home/ryuka/.nuget/packages/rabbitmq.client/7.2.0/rabbitmq.client.7.2.0.nupkg.sha512",
+    "/home/ryuka/.nuget/packages/system.io.pipelines/8.0.0/system.io.pipelines.8.0.0.nupkg.sha512",
+    "/home/ryuka/.nuget/packages/system.threading.ratelimiting/8.0.0/system.threading.ratelimiting.8.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
