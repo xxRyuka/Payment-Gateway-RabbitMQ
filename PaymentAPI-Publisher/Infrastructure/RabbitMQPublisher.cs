@@ -29,6 +29,10 @@ public class RabbitMQPublisher : IRabbitMQPublisher
         // Kanal (Tünel) Oluşturma: Bağlantı üzerinden hafif bir kanal açıyoruz.
         await using var channel = await _connection.CreateChannelAsync();
 
+        
+        Dictionary<string, object> dict = new Dictionary<string, object>();
+        dict.Add("x-dead-letter-exchange", "payment_dlx");
+
 
         // A. KUYRUK GARANTİSİ (DURABILITY)
         // Eğer bu kuyruk yoksa oluştur, varsa olduğu gibi kullan.
@@ -38,7 +42,7 @@ public class RabbitMQPublisher : IRabbitMQPublisher
             durable: true, // => durable True yaparak kuyrugun silinmesini engelliyoruz 
             exclusive: false,
             autoDelete: false,
-            arguments: null);
+            arguments: dict!);
 
 
         // B. MESAJ ETİKETLEME (PERSISTENCE)

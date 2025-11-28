@@ -42,6 +42,12 @@ public class RabbitMQConsumer : IRabbitMQConsumer
             exclusive: false,
             arguments: dict!);
 
+        await channel.QueueDeclareAsync(
+            queue: "dangerius",
+            autoDelete: true,
+            durable: true,
+            exclusive: false,
+            arguments:null);
 
         //BasicQos ile rabbitMQ'nun default olan Round-Robin Dispatch modunu
         //Fairy Dispatch ile değiştiriyoruz 
@@ -118,6 +124,13 @@ public class RabbitMQConsumer : IRabbitMQConsumer
             consumer: consumer // mesajlar kime teslim edilecek ? => bizim olusturdugumuz EventingBasicConsumer nesnesine iletilecek
         );
 
+
+        
+        // Projeyi kapattiğimizda kuyrugu olustururken autoDelete dediğimiz için kuyrukta panelden silinecek 
+        await channel.BasicConsumeAsync(
+            queue: "dangerius",
+            autoAck: false,
+            consumer: consumer);
         await Task.Delay(-1);
     }
 }
