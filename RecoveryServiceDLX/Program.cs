@@ -1,3 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using RecoveryServiceDLX.Infrastucture;
 
-Console.WriteLine("Hello, World!");
+DeadLetterService dlq =  new DeadLetterService();
+
+await dlq.ConnectAsync();
+await dlq.ProcessMessageAsync();

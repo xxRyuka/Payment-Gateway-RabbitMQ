@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RecoveryServiceDLX")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c1088787952fabbd95cf7d59581b0e41b96f729e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d4376d4e58cde115035a28e2502262465267ac5b")]
 [assembly: System.Reflection.AssemblyProductAttribute("RecoveryServiceDLX")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RecoveryServiceDLX")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

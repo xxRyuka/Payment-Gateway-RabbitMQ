@@ -65,7 +65,7 @@ public class RabbitMQPublisher : IRabbitMQPublisher
         // exchange: "" -> Varsayılan değişim (direkt kuyruğa atar) : Simdilik exchangeler ile ilgilenmiyoruz 
         // routingKey: "payment_queue" -> Hangi kuyruğa gidecek?
         await channel.BasicPublishAsync(
-            exchange: "",
+            exchange: "", // default exchange ile ugrasiyoruz 
             routingKey: QueueName,
             mandatory: false,
             basicProperties: props,

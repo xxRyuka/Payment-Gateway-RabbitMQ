@@ -10,7 +10,7 @@ IRabbitMQPublisher publisher = new RabbitMQPublisher();
 await publisher.ConnectAsync();
 
 
-for (int i = 0; i < 1000; i++)
+for (int i = 0; i < 5; i++)
 {
     PaymentRequest paymentRequest = new()
     {

@@ -32,22 +32,36 @@ public class RabbitMQConsumer : IRabbitMQConsumer
         var channel = await _connection.CreateChannelAsync();
 
 
-        Dictionary<string, object> dict = new Dictionary<string, object>();
-        dict.Add("x-dead-letter-exchange", "payment_dlx");
+        // Exchange konusuna ilerde detayli gireceğiz 
+        // A. Dead Letter Exchange (DLX) - Hatalı Mesaj Borsası
+        // Fanout: Gelen hatayı hiç filtrelemeden direkt depoya bas.
+        await channel.ExchangeDeclareAsync(exchange: "payment_dlx", type: ExchangeType.Fanout);
 
+
+        await channel.QueueDeclareAsync(
+            queue: "payment_dlq",
+            durable: true,
+            exclusive: false,
+            autoDelete: false,
+            arguments: null);
+
+        await channel.QueueBindAsync(queue: "payment_dlq", exchange: "payment_dlx", routingKey: "");
+        Dictionary<string, object> dict = new Dictionary<string, object>();
+
+        dict.Add("x-dead-letter-exchange", "payment_dlx");
         await channel.QueueDeclareAsync(
             queue: queueName,
             autoDelete: false,
             durable: true,
             exclusive: false,
-            arguments: dict!);
+            arguments: dict!); // burda ekliyoruz 
 
-        await channel.QueueDeclareAsync(
+        await channel.QueueDeclareAsync( // autoDelete : True oldugu için proje kapandıgında kuyrukta silinecek 
             queue: "dangerius",
             autoDelete: true,
             durable: true,
             exclusive: false,
-            arguments:null);
+            arguments: null);
 
         //BasicQos ile rabbitMQ'nun default olan Round-Robin Dispatch modunu
         //Fairy Dispatch ile değiştiriyoruz 
@@ -100,7 +114,7 @@ public class RabbitMQConsumer : IRabbitMQConsumer
 
                 else
                 {
-                    throw new IOException($" \n Amount Tek Sayi {c}  bu sebeple işlenemedi ve Requeue FALSE \n");
+                    throw new IOException($" \n Amount Tek Sayi {c}  bu sebeple işlenemedi  \n");
                 }
             }
 
@@ -109,11 +123,15 @@ public class RabbitMQConsumer : IRabbitMQConsumer
                 // var k = a.i
                 var x = a.Data.ToString();
                 Console.WriteLine(a.Message);
-
+                Console.WriteLine(" [!] Mesaj DLX'e yönlendiriliyor...");
+                
+                
+                // requeue: false -> "Kuyruğa geri koyma! (true yaparsak Sonsuz döngü olur).
+                // DLX tanımlı olduğu için, false dediğimizde mesaj payment_dlx'e uçar.
                 await channel.BasicNackAsync(
                     deliveryTag: ea.DeliveryTag,
                     multiple: false,
-                    requeue: false);
+                    requeue: false); // Requeue : False yaparak tekrar kuyruga gondermiyorux DLX'e gönderiyoruz 
             }
         };
 
@@ -125,7 +143,6 @@ public class RabbitMQConsumer : IRabbitMQConsumer
         );
 
 
-        
         // Projeyi kapattiğimizda kuyrugu olustururken autoDelete dediğimiz için kuyrukta panelden silinecek 
         await channel.BasicConsumeAsync(
             queue: "dangerius",
